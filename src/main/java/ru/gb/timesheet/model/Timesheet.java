@@ -1,30 +1,3 @@
-//package ru.gb.timesheet.model;
-//
-//import jakarta.persistence.*;
-//import lombok.Data;
-//import lombok.EqualsAndHashCode;
-//
-//import java.time.LocalDate;
-//
-///**
-// * Описание структуры json-ответа на REST-запросы.
-// * Т.е. запросы, ответ на которые - JSON.
-// */
-//@Data
-//@Entity
-//@Table(name = "timesheet")
-//public class Timesheet {
-//
-//  @Id
-//  @GeneratedValue(strategy = GenerationType.IDENTITY)
-//  @EqualsAndHashCode.Include
-//  private Long id;
-//  private Long projectId;
-//  private Integer minutes;
-//  private LocalDate createdAt;
-//
-//}
-
 package ru.gb.timesheet.model;
 
 import jakarta.persistence.*;
@@ -42,6 +15,7 @@ import java.time.LocalDate;
 @Data
 @Entity
 public class Timesheet {
+
     @jakarta.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,6 +27,7 @@ public class Timesheet {
 
     @Column(name = "project_id", nullable = false)
     private Long projectId;
+
     private String projectName;
 
     @Column(nullable = false)
@@ -62,4 +37,11 @@ public class Timesheet {
     private LocalDate createdAt;
 
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }

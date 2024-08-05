@@ -19,12 +19,6 @@ public class TimesheetApplication {
 
         // Создание пользователей и ролей
         createUsersAndRoles(ctx);
-
-        // Создание проектов
-//    createProjects(ctx);
-
-        // Создание таймшитов
-//    createTimesheets(ctx)er
     }
 
     private static void createUsersAndRoles(ApplicationContext ctx) {
@@ -58,16 +52,6 @@ public class TimesheetApplication {
         userRoleRepository.save(userRole);
     }
 
-//  private static void createProjects(ApplicationContext ctx) {
-//    ProjectRepository projectRepo = ctx.getBean(ProjectRepository.class);
-//
-//    // Создание проектов
-//    for (int i = 1; i <= 5; i++) {
-//      Project project = new Project();
-//      project.setName("Project #" + i);
-//      projectRepo.save(project);
-//    }
-//  }
 
     @Bean
     public CommandLineRunner proj(ProjectRepository projectRepo, TimesheetRepository timesheetRepo) {
@@ -90,22 +74,6 @@ public class TimesheetApplication {
         };
     }
 
-//  private static void createTimesheets(ApplicationContext ctx) {
-//    TimesheetRepository timesheetRepo = ctx.getBean(TimesheetRepository.class);
-//    LocalDate createdAt = LocalDate.now();
-//
-//    // Создание таймшитов
-//    for (int i = 1; i <= 10; i++) {
-//      createdAt = createdAt.plusDays(1);
-//
-//      Timesheet timesheet = new Timesheet();
-//      timesheet.setProjectId(ThreadLocalRandom.current().nextLong(1, 6));
-//      timesheet.setCreatedAt(createdAt);
-//      timesheet.setMinutes(ThreadLocalRandom.current().nextInt(100, 1000));
-//
-//      timesheetRepo.save(timesheet);
-//    }
-//  }
 
     @Bean
     CommandLineRunner initDatabase(EmployeeRepository employeeRepository) {
@@ -119,4 +87,5 @@ public class TimesheetApplication {
             employeeRepository.save(new Employee("Александр", "Аничковский", 45, "Management"));
         };
     }
+
 }

@@ -30,32 +30,40 @@ public class TimesheetService {
         return findAll(null, null);
     }
 
-    public List<Timesheet> findAll(LocalDate createdAtBefore, LocalDate createdAtAfter) {
-        // FIXME: Вернуть фильтрацию
 
-        return timesheetRepository.findAll();
+    public List<Timesheet> findAll(LocalDate createdAtBefore, LocalDate createdAtAfter) {
+        if (createdAtBefore == null && createdAtAfter == null) {
+            return timesheetRepository.findAll();
+        } else {
+            return timesheetRepository.findByCreatedAtBeforeAndCreatedAtAfter(createdAtBefore, createdAtAfter);
+        }
     }
 
     public Timesheet create(Timesheet timesheet) {
         if (Objects.isNull(timesheet.getProjectId())) {
-            throw new IllegalArgumentException("projectId не должен быть пустым");
+            throw new IllegalArgumentException("projectId must not be null");
         }
 
-        if (projectRepository.findById(timesheet.getProjectId()).isEmpty()) {
-            throw new NoSuchElementException("Project с id " + timesheet.getProjectId() + " не существует");
+        if (projectRepository.findById(Long.valueOf(timesheet.getProjectId())).isEmpty()) {
+            throw new NoSuchElementException("'Project' с id = " + timesheet.getProjectId() + " не существует");
         }
+
 
         timesheet.setCreatedAt(LocalDate.now());
         return timesheetRepository.save(timesheet);
     }
 
-    public void delete(Long id) {
 
-        timesheetRepository.deleteById(id);
+    public void delete(Long id) {
+        if (timesheetRepository.existsById(id)) {
+            timesheetRepository.deleteById(id);
+        } else {
+            throw new NoSuchElementException("Timesheet with id=" + id + " does not exist");
+        }
     }
 
     public List<Timesheet> findByEmployeeId(Long id) {
         return List.of();
     }
-
 }
+

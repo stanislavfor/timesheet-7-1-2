@@ -5,7 +5,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+
 import org.springframework.stereotype.Service;
 import ru.gb.timesheet.model.User;
 import ru.gb.timesheet.repository.UserRepository;
@@ -16,7 +16,6 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 
-@Component
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -30,11 +29,9 @@ public class MyCustomUserDetailsService implements UserDetailsService {
         log.info("Попытка загрузить пользователя по имени пользователя: {}", username);
         User user = userRepository.findByLogin(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
-
         List<SimpleGrantedAuthority> userRoles = userRoleRepository.findByUserId(user.getId()).stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRoleName()))
                 .toList();
-
         log.info("User roles: {}", userRoles);
         return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), userRoles);
     }

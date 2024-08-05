@@ -68,3 +68,44 @@ http://localhost:8080/home/timesheets/1
 **Ctrl + Alt + L** - Reformat code
 
 <br><br><br>
+
+### Использование log.info в классе MyCustomUserDetailsService
+
+Для использования log.info в классе MyCustomUserDetailsService и для автоматической генерации логгера,<br> 
+необходимо подключить библиотеку Lombok и аннотацию @Slf4j в файле pom.xml. <br>
+В большинстве случаев, кроме Lombok, добавлять дополнительные зависимости не требуется, <br>
+так как аннотация @Slf4j включает в себя все необходимое.
+
+### Использование JSESSIONID в запросах
+
+Для использования в запросах, требуется выполнить аутентификацию, <br>
+сохранить полученный JSESSIONID и использовать для последующих запросов.<br>
+Применять в Java можно с использованием библиотеки Spring RestTemplate, применяя в pom.xml зависимости:
+
+```xml
+
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>1.18.34</version>
+        <scope>provided</scope>
+    </dependency>
+</dependencies>
+
+
+```
+
+<br><br><br><br>

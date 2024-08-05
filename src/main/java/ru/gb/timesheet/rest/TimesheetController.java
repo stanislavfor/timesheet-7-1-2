@@ -1,6 +1,5 @@
 package ru.gb.timesheet.rest;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,16 +14,6 @@ import java.util.NoSuchElementException;
 @RequestMapping("/timesheets")
 public class TimesheetController {
 
-    // GET - получить - не содержит тела
-    // POST - create
-    // PUT - изменение
-    // PATCH - изменение
-    // DELETE - удаление
-
-    // @GetMapping("/timesheets/{id}") // получить конкретную запись по идентификатору
-    // @DeleteMapping("/timesheets/{id}") // удалить конкретную запись по идентификатору
-    // @PutMapping("/timesheets/{id}") // обновить конкретную запись по идентификатору
-
     private final TimesheetService service;
 
     public TimesheetController(TimesheetService service) {
@@ -38,10 +27,7 @@ public class TimesheetController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // /timesheets
-    // /timesheets?createdAtBefore=2024-07-09
-    // /timesheets?createdAtAfter=2024-07-15
-    // /timesheets?createdAtAfter=2024-07-15&createdAtBefore=2024-06-05
+
     @GetMapping
     public ResponseEntity<List<Timesheet>> getAll(
             @RequestParam(required = false) LocalDate createdAtBefore,
@@ -76,3 +62,13 @@ public class TimesheetController {
     }
 
 }
+// Для справки:
+// GET - получить - не содержит тела
+// POST - create
+// PUT - изменение
+// PATCH - изменение
+// DELETE - удаление
+
+// @GetMapping("/timesheets/{id}") // получить конкретную запись по идентификатору
+// @DeleteMapping("/timesheets/{id}") // удалить конкретную запись по идентификатору
+// @PutMapping("/timesheets/{id}") // обновить конкретную запись по идентификатору

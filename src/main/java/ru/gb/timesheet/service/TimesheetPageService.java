@@ -2,12 +2,13 @@ package ru.gb.timesheet.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.gb.timesheet.page.TimesheetPageDto;
 import ru.gb.timesheet.model.Project;
 import ru.gb.timesheet.model.Timesheet;
+import ru.gb.timesheet.page.TimesheetPageDto;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -24,22 +25,21 @@ public class TimesheetPageService {
     }
 
     public Optional<TimesheetPageDto> findById(Long id) {
-        return timesheetService.findById(id) // Optional<Timesheet>
+        return timesheetService.findById(id)
                 .map(this::convert);
     }
 
     private TimesheetPageDto convert(Timesheet timesheet) {
         Project project = projectService.findById(timesheet.getProjectId())
-                .orElseThrow();
+                .orElseThrow(() -> new NoSuchElementException("Проект не найден"));
 
-        TimesheetPageDto timesheetPageParameters = new TimesheetPageDto();
-        timesheetPageParameters.setProjectName(project.getName());
-        timesheetPageParameters.setId(String.valueOf(timesheet.getId()));
-        // 150 -> 2h30m
-        timesheetPageParameters.setMinutes(String.valueOf(timesheet.getMinutes()));
-        timesheetPageParameters.setCreatedAt(timesheet.getCreatedAt().format(DateTimeFormatter.ISO_DATE));
+        TimesheetPageDto timesheetPageDto = new TimesheetPageDto();
+        timesheetPageDto.setProjectName(project.getName());
+        timesheetPageDto.setId(String.valueOf(timesheet.getId()));
+        timesheetPageDto.setProjectId(timesheet.getProjectId());
+        timesheetPageDto.setMinutes(String.valueOf(timesheet.getMinutes()));
+        timesheetPageDto.setCreatedAt(timesheet.getCreatedAt().format(DateTimeFormatter.ISO_DATE));
 
-        return timesheetPageParameters;
+        return timesheetPageDto;
     }
-
 }

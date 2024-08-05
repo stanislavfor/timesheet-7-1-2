@@ -17,16 +17,24 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/home/timesheets/**").hasAnyAuthority(Role.USER.getName())
-                        .anyRequest().authenticated())
+        http
+                .authorizeHttpRequests(requests -> requests
+                        .requestMatchers("/home/timesheets/**", "/home/projects/**", "/home/employees/**")
+                        .hasAnyAuthority(Role.USER.getName(), Role.ADMIN.getName())
+                        .requestMatchers("/admin/**").hasAuthority(Role.ADMIN.getName())
+                        .anyRequest().authenticated()
+                )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/home/timesheets", true)
                         .failureUrl("/login?error")
-                        .permitAll())
-                .logout(logout -> logout.permitAll());
+                        .permitAll()
+                )
+                .logout(logout -> logout.permitAll())
+                .exceptionHandling(exception -> exception
+                        .accessDeniedPage("/home/oops")
+                );
         return http.build();
     }
 
@@ -35,3 +43,4 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 }
+

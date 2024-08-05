@@ -25,6 +25,7 @@ public class ProjectService {
         return projectRepository.findById(id);
     }
 
+
     public List<Project> findAll() {
         return projectRepository.findAll();
     }
@@ -45,3 +46,5 @@ public class ProjectService {
         return timesheetRepository.findByProjectId(id);
     }
 }
+
+

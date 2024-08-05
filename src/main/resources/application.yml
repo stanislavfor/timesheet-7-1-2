@@ -15,8 +15,8 @@ spring:
     driver-class-name: org.h2.Driver
   jpa:
     show-sql: true
-#    hibernate:
-#      ddl-auto: validate
+  #    hibernate:
+  #      ddl-auto: validate
 
   main:
     allow-bean-definition-overriding: true

@@ -1,22 +1,3 @@
-//package ru.gb.timesheet.model;
-//
-//import jakarta.persistence.*;
-//import lombok.Data;
-//import lombok.EqualsAndHashCode;
-//
-//@Data
-//@Entity
-//@Table(name = "project")
-//public class Project {
-//
-//  @Id
-//  @GeneratedValue(strategy = GenerationType.SEQUENCE)
-//  @EqualsAndHashCode.Include
-//  private Long id;
-//  private String name;
-//
-//}
-
 package ru.gb.timesheet.model;
 
 import jakarta.persistence.*;
@@ -30,20 +11,20 @@ import java.util.Set;
 @Entity
 public class Project {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  @Column(nullable = false)
-  private String name;
+    @Column(nullable = false)
+    private String name;
 
-  @ManyToMany
-  @JoinTable(
-          name = "project_employee",
-          joinColumns = @JoinColumn(name = "project_id"),
-          inverseJoinColumns = @JoinColumn(name = "employee_id")
-  )
-  private Set<Employee> employees = new HashSet<>();
+    @ManyToMany
+    @JoinTable(
+            name = "project_employee",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "employee_id")
+    )
+    private Set<Employee> employees = new HashSet<>();
 
 
 }
